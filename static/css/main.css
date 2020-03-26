@@ -1,0 +1,11 @@
+.no-hover:hover {
+    color: #343a40 !important;
+    background: transparent !important;
+    cursor:default !important;
+}
+
+.no-hover:active {
+    color: #343a40 !important;
+    background: transparent !important;
+    cursor:default !important;
+}

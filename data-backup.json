@@ -1,0 +1,39 @@
+{
+  "NITPQ1": {
+    "name": "Sam's Pub Quiz",
+    "rounds": [
+      {
+        "name": "Current Affairs",
+        "questions": [
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know."
+          },
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know."
+          }
+        ]
+      },
+      {
+        "name": "More Current Affairs",
+        "questions": [
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know."
+          },
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know."
+          }
+        ]
+      }
+    ],
+    "id": "NITPQ1",
+    "host_id": "NITPQ1",
+    "teams": {},
+    "status": "pre-quiz",
+    "current_round": -1,
+    "current_question": -1
+  }
+}
