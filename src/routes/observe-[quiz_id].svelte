@@ -2,37 +2,34 @@
     <div class="container">
         <span class="navbar-brand">{quiz.name}</span>
         <div class="d-block d-md-none">
-            <span class="btn btn-sm btn-outline-dark no-hover">R {quiz.current_round+1}/{quiz.total_rounds}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">Q {round.questions.length}/{round.total_questions}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">T: {quiz.connected_teams}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">O: {quiz.connected_observers}</span>
+            {#if quiz.state != "pre-quiz"}
+                <span class="btn btn-sm btn-outline-dark no-hover">R {quiz.current_round+1}/{quiz.total_rounds}</span>
+                <span class="btn btn-sm btn-outline-dark no-hover">Q {quiz.current_question+1}/{round.total_questions}</span>
+            {/if}
+            <span class="btn btn-sm btn-outline-dark no-hover">C: {quiz.connected_teams}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_observers}</span>
         </div>
         <div class="d-none d-md-block">
-            <span class="btn btn-sm btn-outline-dark no-hover">Round {quiz.current_round+1}/{quiz.total_rounds}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">Question {round.questions.length}/{round.total_questions}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">Teams Connected: {quiz.connected_teams}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">Observers Connected: {quiz.connected_observers}</span>
+            {#if quiz.state != "pre-quiz"}
+                <span class="btn btn-sm btn-outline-dark no-hover">Round {quiz.current_round+1}/{quiz.total_rounds}</span>
+                <span class="btn btn-sm btn-outline-dark no-hover">Question {quiz.current_question+1}/{round.total_questions}</span>
+            {/if}
+            <span class="btn btn-sm btn-outline-dark no-hover">Captains Connected: {quiz.connected_teams}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_observers}</span>
         </div>
     </div>
 </nav>
 
 
 <div class="container mt-4">
-    {#if quiz.status == "pre"}
+    {#if quiz.state == "pre-quiz"}
         <div class="card mb-4">
             <div class="card-body">
                 <h4>Waiting for the host to start the quiz.</h4>
             </div>
         </div>
 
-    {:else if quiz.status == "post"}
-        <div class="card mb-4">
-            <div class="card-body">
-                <h4>Host is now marking answers.</h4>
-            </div>
-        </div>
-
-    {:else if round.questions.length == 0}
+    {:else if quiz.state == "pre-round"}
         <h2 class="mb-4">Round {quiz.current_round+1} - {round.name}</h2>
 
         <div class="card mb-4">
@@ -40,7 +37,8 @@
                 <h4>Waiting for the host to start the round.</h4>
             </div>
         </div>
-    {:else}
+
+    {:else if quiz.state == "round"}
         <h2 class="mb-4">Round {quiz.current_round+1} - {round.name}</h2>
 
         {#each [...round.questions.entries()] as [i, question]}
@@ -54,6 +52,20 @@
                 </div>
             </div>
         {/each}
+
+    {:else if quiz.state == "round-marking"}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Host is now marking answers from this round.</h4>
+            </div>
+        </div>
+
+    {:else if quiz.state == "post-quiz"}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Thank-you for playing! Your host can now share the results.</h4>
+            </div>
+        </div>
     {/if}
 </div>
 
@@ -74,8 +86,6 @@ export async function preload(page, session) {
 
     let data = await res.json()
     let quiz = Object.assign(new ObserverQuiz, data.quiz)
-
-    quiz.connected_observers++
 
     return { quiz }
 }

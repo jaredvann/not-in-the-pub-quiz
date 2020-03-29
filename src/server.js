@@ -91,7 +91,7 @@ app.get("/api/check-team-name", (req, res) => {
 })
 
 app.get("/api/check-quiz-id", (req, res) => {
-    send(res, 200, {valid: req.query.id in quizzes && quizzes[req.query.id].options.allow_signups})
+    send(res, 200, {valid: req.query.id in quizzes})
 })
 
 app.get("/api/observe", (req, res) => {
@@ -178,6 +178,12 @@ host_wss.on("connection", (ws, req) => {
             ws.send(JSON.stringify({type: "quiz-state", quiz: ws.quiz}))
             sendToAllObservers(ws.quiz.id, {type: "quiz-state", quiz: new ObserverQuiz(ws.quiz)})
             sendToAllTeams(ws.quiz.id, {type: "quiz-state", quiz: new ObserverQuiz(ws.quiz)})
+
+            if (ws.quiz.state == "post-quiz" && ws.quiz.options.save_quiz) {
+                let q2 = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
+                q2[ws.quiz.id] = ws.quiz
+                fs.writeFileSync(DATA_FILE, JSON.stringify(q2, null, 2) , "utf-8")
+            }
         }
         else if (data.type == "score-update") {
             ws.quiz.teams.find(t => t.id == data.team_id).scores[data.round][data.question] = data.score
@@ -244,7 +250,7 @@ for (let quiz_id in quizzes) {
         }
         else if (path == "connected_observers") {
             sendToAllTeams(quiz.id, {type: "connected-observers", value: value})
-            sendToAllObservers(quiz.id, {type: "connected-teams", value: value})
+            sendToAllObservers(quiz.id, {type: "connected-observers", value: value})
         }
 
         sendToQuizHost(quiz.id, {type: "quiz-state", quiz: quiz})
@@ -289,7 +295,7 @@ function makeQuizObject(name, rounds, teams, options, id=undefined) {
         host_id = randomstring.generate({length: 20, capitalization: "uppercase"})
     }
 
-    const quiz = new Quiz(id, host_id, name, rounds, teams, options.allow_signups)
+    const quiz = new Quiz(id, host_id, name, rounds, teams, options)
 
     const quizproxy = onchange(quiz, (path, value, previous) => {
         sendToQuizHost(quiz.id, {type: "quiz-state", quiz: quiz})
@@ -308,5 +314,5 @@ function makeQuizObject(name, rounds, teams, options, id=undefined) {
 
 
 function checkTeamNameIsValid(quiz_id, team_name) {
-    return (quiz_id in quizzes) && team_name.length >= 3 && team_name.length <= 60 && !quiz.teams.find(t => t.id == team_name)
+    return (quiz_id in quizzes) && team_name.length >= 3 && team_name.length <= 60 && !quizzes[quiz_id].teams.find(t => t.id == team_name)
 }

@@ -1,6 +1,6 @@
 <div class="card mb-3">
     <div class="card-header">
-        <span class="lead">Text Round <span class="text-muted">(Round {i})</span></span>
+        <span class="lead">Text Round <span class="text-muted">(Round {i+1})</span></span>
         <div class="btn-toolbar float-right">
             <!-- <button class="btn btn-sm btn-secondary mr-2">Move Up</button>
             <button class="btn btn-sm btn-secondary mr-2">Move Down</button> -->
@@ -14,7 +14,7 @@
         <input type="text" id="round_name_input" class="form-control mb-4" bind:value="{round.name}" class:is-valid="{name_is_valid}" class:is-invalid="{!name_is_valid}" placeholder="Round Name"/>
     
         {#each [...round.questions.entries()] as [i, question]}
-            <QuestionForm i={i+1} bind:question on:remove={removeQuestion} allowdeletion={round.questions.length > 1}/>
+            <QuestionForm i={i} bind:question on:remove={removeQuestion} allowdeletion={round.questions.length > 1}/>
         {/each}
 
         <button on:click={addQuestion} class="btn btn-primary mt-2">Add Question</button>
@@ -47,7 +47,7 @@ function addQuestion() {
 }
 
 function removeQuestion(e) {
-    round.questions.splice(e.detail.i-1, 1)
+    round.questions.splice(e.detail.i, 1)
     round.questions = round.questions
 }
 </script>

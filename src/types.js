@@ -47,14 +47,14 @@ export class Quiz {
      *  NOTE: currently only geared for marking at the end of each round.
      */
 
-    constructor(id, host_id, name, rounds, teams, allow_signups) {
+    constructor(id, host_id, name, rounds, teams, options) {
         this.id = id
         this.host_id = host_id
         
         this.name = name
         this.rounds = rounds
         this.teams = teams
-        this.allow_signups = allow_signups
+        this.options = options
 
         this.state = "pre-quiz"
         this.current_round = -1
@@ -108,7 +108,7 @@ export class Quiz {
             }
         }
         else if (this.state == "post-quiz") {
-            // YOLO
+            // WAT
         }
         else {
             // YOU DUN GOOFED
@@ -151,6 +151,7 @@ export class ObserverQuiz {
             })
             
             this.total_rounds = quiz.rounds.length
+            
             this.current_round = quiz.current_round
             this.current_question = quiz.current_question
 

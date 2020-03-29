@@ -12,9 +12,8 @@
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
                 <a class="nav-item nav-link {segment === undefined ? 'active' : ''}" href=".">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link {segment === 'about' ? 'active' : ''}" href="about">About</a>
                 <a class="nav-item nav-link {segment === 'create' ? 'active' : ''}" href="create">Create Quiz</a>
-                <a class="nav-item nav-link {segment === 'join-team' ? 'active' : ''}" href="join-team">Join As Team Leader</a>
+                <a class="nav-item nav-link {segment === 'join-team' ? 'active' : ''}" href="join-team">Join As Team Captain</a>
                 <a class="nav-item nav-link {segment === 'join-observe' ? 'active' : ''}" href="join-observe">Join As Team Player</a>
             </div>
         </div>

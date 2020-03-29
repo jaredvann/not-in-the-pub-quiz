@@ -6,13 +6,13 @@
         </button>
     </div>
 
-    <h1>Join</h1>
+    <h1>Join quiz with new team</h1>
 
-    <p class="lead">Enter the team ID given by your quiz host to get started. It should be six mixed letters and numbers (eg. 'SJHG2N').</p>
+    <p class="lead">Enter the quiz ID given by your quiz host to get started. It should be 6 mixed letters and numbers (eg. 'SJHG2N').</p>
 
     <div class="form-group">
-        <input type="text" on:input={checkQuizID} value={quiz_id} class:is-valid="{quiz_id_is_valid}" class:is-invalid="{!quiz_id_is_valid}" placeholder="Quiz Team ID" class="form-control form-control-lg" required/>
-        <div class="invalid-feedback">Quiz team ID not valid!</div>
+        <input type="text" on:input={checkQuizID} value={quiz_id} class:is-valid="{quiz_id_is_valid}" class:is-invalid="{!quiz_id_is_valid}" placeholder="Quiz ID" class="form-control form-control-lg" required/>
+        <div class="invalid-feedback">Quiz ID not valid!</div>
         <div class="valid-feedback">Quiz found!</div>
     </div>
 
@@ -31,8 +31,8 @@ import { goto } from "@sapper/app"
 
 let error_text = ""
 
-let quiz_id = "NITPQ1"
-let quiz_id_is_valid = true
+let quiz_id = ""
+let quiz_id_is_valid = false
 
 let team_name = ""
 let team_name_is_valid = false

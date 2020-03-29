@@ -42,6 +42,6 @@
     "rollup-plugin-terser": "^4.0.4",
     "sanitize": "^2.1.0",
     "sapper": "^0.27.0",
-    "svelte": "^3.0.0",
+    "svelte": "^3.0.0"
   }
 }

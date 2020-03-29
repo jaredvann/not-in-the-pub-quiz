@@ -7,11 +7,13 @@
         "questions": [
           {
             "question": "What does COVID-19 stand for?",
-            "answer": "I don't know."
+            "answer": "I don't know.",
+            "points": 2
           },
           {
             "question": "What does COVID-19 stand for?",
-            "answer": "I don't know."
+            "answer": "I don't know.",
+            "points": 1
           }
         ]
       },
@@ -20,20 +22,74 @@
         "questions": [
           {
             "question": "What does COVID-19 stand for?",
-            "answer": "I don't know."
+            "answer": "I don't know.",
+            "points": 1
           },
           {
             "question": "What does COVID-19 stand for?",
-            "answer": "I don't know."
+            "answer": "I don't know.",
+            "points": 1
           }
         ]
       }
     ],
     "id": "NITPQ1",
     "host_id": "NITPQ1",
-    "teams": {},
-    "status": "pre-quiz",
-    "current_round": -1,
-    "current_question": -1
+    "teams": [
+      {
+        "id": "TEAM1",
+        "name": "Team 1",
+        "answers": [
+          [
+            "Answer",
+            "Also An Answer"
+          ],
+          [
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "TEAM2",
+        "name": "Team 2",
+        "answers": [
+          [
+            "Wrong Answer",
+            "What is Covid?"
+          ],
+          [
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    ],
+    "state": "pre-quiz",
+    "current_round": 0,
+    "current_question": -1,
+    "options": {
+      "allow_signups": false
+    }
   }
 }

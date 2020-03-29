@@ -10,24 +10,24 @@
 
     <div class="form-group">
         <label for="quiz_name_input">Quiz Name:</label>
-        <input type="text" id="quiz_name_input" class="form-control" bind:value="{quiz_name}" class:is-valid="{name_is_valid}" class:is-invalid="{!name_is_valid}" placeholder="Round Name"/>
+        <input type="text" id="quiz_name_input" class="form-control" bind:value="{quiz_name}" class:is-valid="{name_is_valid}" class:is-invalid="{!name_is_valid}" placeholder="Quiz Name"/>
     </div>
 
     <label>Options:</label>
 
-    <div class="form-group form-check">
-        <input type="checkbox" bind:checked={save_quiz} class="form-check-input">
+    <!-- <div class="form-group form-check">
+        <input type="checkbox" bind:checked={save_quiz} disabled class="form-check-input">
         <label class="form-check-label">Save quiz.</label>
-    </div>
+    </div> -->
 
-    <div class="form-group form-check">
+    <!-- <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" disabled checked>
         <label class="form-check-label">Host marks questions at the end of each round.</label>
-    </div>
+    </div> -->
 
     <div class="form-group form-check">
         <input type="checkbox" bind:checked={allow_signups} class="form-check-input">
-        <label class="form-check-label">Allow additional signups from people who have been given the quiz ID.</label>
+        <label class="form-check-label">Allow additional team signups from people who have been given the quiz ID.</label>
     </div>
 
     <div class="card mb-3">
@@ -44,7 +44,7 @@
     </div>
 
     {#each [...rounds.entries()] as [i, round]}
-        <RoundForm i={i+1} bind:round on:remove={removeRound} allowdeletion={rounds.length > 1}/>
+        <RoundForm i={i} bind:round on:remove={removeRound} allowdeletion={rounds.length > 1}/>
     {/each}
 
     <button on:click={addRound} class="btn btn-primary mt-2">Add Round</button>
@@ -85,7 +85,7 @@ function addRound() {
 }
 
 function removeRound(e) {
-    rounds.splice(e.detail.id-1, 1)
+    rounds.splice(e.detail.i, 1)
     rounds = rounds
 }
 
@@ -94,7 +94,7 @@ function addTeam() {
 }
 
 function removeTeam(e) {
-    teams.splice(e.detail.id-1, 1)
+    teams.splice(e.detail.i, 1)
     teams = teams
 }
 
@@ -105,7 +105,7 @@ async function submit() {
         rounds: rounds,
         teams: teams,
         options: {
-            save_quiz: save_quiz,
+            save_quiz: true,
             allow_signups: allow_signups,
         },
     }

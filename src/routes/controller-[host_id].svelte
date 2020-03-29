@@ -2,17 +2,17 @@
   <div class="container">
     <button on:click={next} disabled={awaiting_response} class="btn btn-lg btn-success">{next_btn_text}</button>
 
-    <div class="d-block d-sm-none">
+    <div class="d-block d-md-none">
       <span class="btn btn-sm btn-outline-dark no-hover">R: {quiz.current_round+1}/{quiz.rounds.length}</span>
       <span class="btn btn-sm btn-outline-dark no-hover">Q: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : quiz.questionsInRound()}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">T: {quiz.connected_teams}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">O: {quiz.connected_observers}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">C: {quiz.connected_teams}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_observers}</span>
     </div>
-    <div class="d-none d-sm-block">
+    <div class="d-none d-md-block">
       <span class="btn btn-sm btn-outline-dark no-hover">Round: {quiz.current_round+1}/{quiz.rounds.length}</span>
       <span class="btn btn-sm btn-outline-dark no-hover">Question: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : quiz.questionsInRound()}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Teams Connected: {quiz.connected_teams}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Observers Connected: {quiz.connected_observers}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Captains Connected: {quiz.connected_teams}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Pplayers Connected: {quiz.connected_observers}</span>
     </div>
   </div>
 </nav>
@@ -22,25 +22,34 @@
   <div class="row">
     <div class="col">
       <div class="list-group mb-4">
-        <h3 class="list-group-item">Invite Links</h3>
-        <div class="list-group-item">
-          <div class="row">
-            <label class="col-4 col-form-label"><strong>Observers</strong></label>
-            <div class="col-8">
-              <input type="text" value={`http://notinthepubquiz.com/observe-${quiz.id}`} class="form-control" readonly>
-            </div>
+        <h3 class="list-group-item">
+          Invite Links
+          <button on:click={swapInviteFormat} class="btn btn-dark float-right">{text_invite_format ? "Switch to form" : "Switch to text"}</button>
+        </h3>
+        {#if text_invite_format}
+          <div class="list-group-item">
+            <textarea class="form-control" rows={quiz.teams.length+1} value={"Team Players".padEnd(Math.max(...quiz.teams.map(t => t.name.length))) + ` : http://notinthepubquiz.com/observe-${quiz.id}\n` + quiz.teams.map(t => t.name.padEnd(Math.max(...quiz.teams.map(t => t.name.length))) + ` : http://notinthepubquiz.com/room-${t.id}`).join("\n")} style="font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;"></textarea>
           </div>
-        </div>
-        {#each quiz.teams as team}
+        {:else}
           <div class="list-group-item">
             <div class="row">
-              <label class="col-4 col-form-label">{team.name}</label>
+              <label class="col-4 col-form-label"><strong>Team Players</strong></label>
               <div class="col-8">
-                <input type="text" value={`http://notinthepubquiz.com/room-${team.id}`} class="form-control" readonly>
+                <input type="text" value={`http://notinthepubquiz.com/observe-${quiz.id}`} class="form-control" readonly>
               </div>
             </div>
           </div>
-        {/each}
+          {#each quiz.teams as team}
+            <div class="list-group-item">
+              <div class="row">
+                <label class="col-4 col-form-label">{team.name}</label>
+                <div class="col-8">
+                  <input type="text" value={`http://notinthepubquiz.com/room-${team.id}`} class="form-control" readonly>
+                </div>
+              </div>
+            </div>
+          {/each}
+        {/if}
       </div>
     </div>
   </div>
@@ -67,11 +76,11 @@
                     {#if i<quiz.current_round || (quiz.state=="round-marking" && quiz.current_round==i)}
                       {#if question.points == 1}
                         <div class="form-check float-right">
-                          <input type="checkbox" class="form-check-input" on:change={updateScore} data-teamid={team.id} data-round={i} data-question={j} disabled={!(quiz.state=="round-marking" && quiz.current_round==i)}>
+                          <input type="checkbox" class="form-check-input" on:change={updateScore} data-teamid={team.id} data-round={i} data-question={j}>
                         </div>
                       {:else}
                         <div class="float-right">
-                          <input type="number" class="form-control bg-light text-dark" on:input={updateScore} data-teamid={team.id} data-round={i} data-question={j} min=0 max={question.points} value=0 disabled={!(quiz.state=="round-marking" && quiz.current_round==i)}>
+                          <input type="number" class="form-control bg-light text-dark" on:input={updateScore} data-teamid={team.id} data-round={i} data-question={j} min=0 max={question.points} value=0>
                         </div>
                       {/if}
                     {/if}
@@ -189,6 +198,7 @@ import { onMount } from "svelte"
 export let quiz
 export let next_btn_text
 
+let text_invite_format = false
 let awaiting_response = false
 let ws = null
 
@@ -210,6 +220,11 @@ onMount(() => {
 })
 
 
+function swapInviteFormat() {
+  text_invite_format = !text_invite_format
+}
+
+
 function next() {
     awaiting_response = true
 
@@ -226,7 +241,12 @@ function next() {
 
 function updateScore(e) {
     const data = e.target.dataset
-    const score = (e.target.type == "checkbox") ? (e.target.checked ? 1 : 0) : Number(e.target.value)
+    let score = (e.target.type == "checkbox") ? (e.target.checked ? 1 : 0) : Number(e.target.value)
+
+    if (score > quiz.rounds[data.round].questions[data.question].points) {
+        score = quiz.rounds[data.round].questions[data.question].points
+        e.target.value = score
+    }
 
     quiz.teams.find(t => t.id == data.teamid).scores[data.round][data.question] = score
 

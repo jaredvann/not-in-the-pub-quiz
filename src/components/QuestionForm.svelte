@@ -1,7 +1,7 @@
 <div class="card mb-2">
     <div class="card-body">
         <div class="card-title">
-            <span class="lead">Question {i}</span>
+            <span class="lead">Question {i+1}</span>
             <div class="btn-toolbar float-right">
                 <!-- <button class="btn btn-sm btn-outline-secondary mb-2 mr-2">Move Up</button>
                 <button class="btn btn-sm btn-outline-secondary mb-2 mr-2">Move Down</button> -->

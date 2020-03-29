@@ -38,7 +38,7 @@
     "teams": [
       {
         "id": "TEAM1",
-        "name": "Team 1",
+        "name": "I lost my job and now all I do is host this quiz",
         "answers": [
           [
             "Answer",
@@ -87,6 +87,9 @@
     ],
     "state": "pre-quiz",
     "current_round": 0,
-    "current_question": -1
+    "current_question": -1,
+    "options": {
+      "allow_signups": false
+    }
   }
 }
