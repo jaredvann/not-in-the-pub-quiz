@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
   <div class="container">
-    <button on:click={next} disabled={awaiting_response} class="btn btn-lg btn-success">{next_btn_text}</button>
+    <div class="btn-toolbar">
+      <button on:click={back} disabled={awaiting_response || quiz.state=="pre-quiz" || quiz.state=="post-quiz"} class="btn btn-lg btn-danger mr-2">Back</button>
+      <button on:click={next} disabled={awaiting_response} class="btn btn-lg btn-success">{next_btn_text}</button>
+    </div>
 
     <div class="d-block d-md-none">
       <span class="btn btn-sm btn-outline-dark no-hover">R: {quiz.current_round+1}/{quiz.rounds.length}</span>
@@ -12,7 +15,7 @@
       <span class="btn btn-sm btn-outline-dark no-hover">Round: {quiz.current_round+1}/{quiz.rounds.length}</span>
       <span class="btn btn-sm btn-outline-dark no-hover">Question: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : quiz.questionsInRound()}</span>
       <span class="btn btn-sm btn-outline-dark no-hover">Captains Connected: {quiz.connected_teams}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Pplayers Connected: {quiz.connected_observers}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_observers}</span>
     </div>
   </div>
 </nav>
@@ -225,19 +228,23 @@ function swapInviteFormat() {
 }
 
 
+function back() {
+    awaiting_response = true
+    ws.send(JSON.stringify({type: "back"}))
+}
+
+
 function next() {
     awaiting_response = true
 
-    if (quiz.state == "round-marking") {
-        ws.send(JSON.stringify({type: "next"}))
-    }
-    else if (quiz.state == "post-quiz") {
+    if (quiz.state == "post-quiz") {
         goto(`/results-${quiz.id}`)
     }
     else {
         ws.send(JSON.stringify({type: "next"}))
     }
 }
+
 
 function updateScore(e) {
     const data = e.target.dataset

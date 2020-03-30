@@ -173,8 +173,14 @@ host_wss.on("connection", (ws, req) => {
     ws.on("message", (message) => {
         const data = JSON.parse(message)
         
-        if (data.type == "next") {
-            ws.quiz.next()
+        if ((data.type == "back" && ws.quiz.state != "post-quiz") || data.type == "next") {
+            if (data.type == "back") {
+                ws.quiz.back()
+            }
+            else {
+                ws.quiz.next()
+            }
+
             ws.send(JSON.stringify({type: "quiz-state", quiz: ws.quiz}))
             sendToAllObservers(ws.quiz.id, {type: "quiz-state", quiz: new ObserverQuiz(ws.quiz)})
             sendToAllTeams(ws.quiz.id, {type: "quiz-state", quiz: new ObserverQuiz(ws.quiz)})

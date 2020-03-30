@@ -91,5 +91,943 @@
     "options": {
       "allow_signups": false
     }
+  },
+  "XXKQIK": {
+    "id": "XXKQIK",
+    "host_id": "OUNBKBUWQSBH1QREB90D",
+    "name": "Postgrads Lockdown Quiz",
+    "rounds": [
+      {
+        "name": "Working From Home",
+        "questions": [
+          {
+            "question": "Guess the occupation",
+            "answer": "Archaeologist",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Pilot",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Zookeeper",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Taxi Driver",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Demolition Worker",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Truck driver",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Builder",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Receptionist",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Train conductor",
+            "points": 1
+          },
+          {
+            "question": "Guess the occupation",
+            "answer": "Surgeon",
+            "points": 1
+          }
+        ]
+      },
+      {
+        "name": "Fictional Pub",
+        "questions": [
+          {
+            "question": "What is the name of the pub in the Disney film Tangled?",
+            "answer": "The Snuggly Duckling",
+            "points": 1
+          },
+          {
+            "question": "What is the name of the pub in Coronation Street?",
+            "answer": "Rovers Return Inn",
+            "points": 1
+          },
+          {
+            "question": "What is the name of the pub in the Carry On films?",
+            "answer": "The Whippit Inn",
+            "points": 1
+          },
+          {
+            "question": "What is the name of the pub in Eastenders?",
+            "answer": "The Queen Victoria",
+            "points": 1
+          },
+          {
+            "question": "Where can you drink Butterbeer in Hogsmeade?",
+            "answer": "Three Broomsticks ",
+            "points": 1
+          },
+          {
+            "question": "What is Homer Simpson's favourite pub?",
+            "answer": "Moe's Tavern",
+            "points": 1
+          },
+          {
+            "question": "What is the name of the pub in the Lord of the Rings: Fellowship of the Ring?",
+            "answer": "The Prancing Pony",
+            "points": 1
+          },
+          {
+            "question": "In \"The World's End\", what are the names of the ninth and twelfth pubs on the Golden Mile pub crawl?",
+            "answer": "The Beehive and The World's End",
+            "points": 2
+          },
+          {
+            "question": "What's the pub where everybody knows your name?",
+            "answer": "Cheers",
+            "points": 1
+          },
+          {
+            "question": "Where would you go to have a nice cold pint, and wait for all this to blow over?",
+            "answer": "Winchester Arms",
+            "points": 1
+          }
+        ]
+      },
+      {
+        "name": "Disney",
+        "questions": [
+          {
+            "question": "What is the address Dory has to remember in Finding Nemo?",
+            "answer": "P. Sherman, 42 Wallaby Way, Sydney",
+            "points": 1
+          },
+          {
+            "question": "What was the first feature-length Disney movie?",
+            "answer": "Snow White and the Seven Dwarfs",
+            "points": 1
+          },
+          {
+            "question": "What fraction will you find on the Mad Hatter's hat?",
+            "answer": "10/6",
+            "points": 1
+          },
+          {
+            "question": "What was the name of the town Rapunzel lived in in Tangled?",
+            "answer": "Corona",
+            "points": 1
+          },
+          {
+            "question": "Who created Pinocchio?",
+            "answer": "Geppetto",
+            "points": 1
+          },
+          {
+            "question": "Name the 3 good fairies in Sleeping Beauty",
+            "answer": "Flora, Fauna & Merryweather",
+            "points": 1
+          },
+          {
+            "question": "Which is the only Disney song to have won a Grammy for ‘song of the year’?",
+            "answer": "A Whole New World",
+            "points": 1
+          },
+          {
+            "question": "What is Boo’s real name in Monster’s Inc?",
+            "answer": "Mary",
+            "points": 1
+          },
+          {
+            "question": "How many eggs does Gaston eat for breakfast?",
+            "answer": "Five dozen (60!)",
+            "points": 1
+          },
+          {
+            "question": "Name all of the Seven Dwarfs",
+            "answer": " Dopey, Sneezy, Bashful, Doc, Happy, Grumpy & Sleepy",
+            "points": 2
+          }
+        ]
+      },
+      {
+        "name": "Back to the Nineties ",
+        "questions": [
+          {
+            "question": "Guess the theme tune",
+            "answer": "Saved by the bell",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Pinky and the brain",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Hey Arnold",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Keenan and Kel",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Rugrats",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Recess",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Friends",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Fraiser",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Dawson's creek",
+            "points": 1
+          },
+          {
+            "question": "Guess the theme tune",
+            "answer": "Gladiator",
+            "points": 1
+          }
+        ]
+      },
+      {
+        "name": "Bored Games",
+        "questions": [
+          {
+            "question": "What is the first property after passing go in Monopoly?",
+            "answer": "Old Kent Road",
+            "points": 1
+          },
+          {
+            "question": "How many points would the word 'Scrabble' get you in a game of Scrabble?",
+            "answer": "14",
+            "points": 1
+          },
+          {
+            "question": "Which chess piece (aside from a Queen) allows you to move diagonally?",
+            "answer": "Bishop",
+            "points": 1
+          },
+          {
+            "question": "Where in the body could you find a horse in Operation?",
+            "answer": "Leg",
+            "points": 1
+          },
+          {
+            "question": "How many territories are there in Risk?",
+            "answer": "44",
+            "points": 1
+          },
+          {
+            "question": "Aside from the career path, which path can you take in the Game of Life?",
+            "answer": "College",
+            "points": 1
+          },
+          {
+            "question": "What colour is the 'Science and Nature' category in Trivial Pursuit?",
+            "answer": "Green",
+            "points": 1
+          },
+          {
+            "question": "In which game would you find the card \"Why am I sticky?\"",
+            "answer": "Cards against Humanity",
+            "points": 1
+          },
+          {
+            "question": "Which part of your body is the plastic piece for in Speak Out?",
+            "answer": "Mouth",
+            "points": 1
+          },
+          {
+            "question": "In which game do you work as a team to treat infections around the world?",
+            "answer": "Pandemic",
+            "points": 1
+          }
+        ]
+      }
+    ],
+    "teams": [
+      {
+        "id": "WNEGU4JV5V",
+        "name": "Quizteam Quarantino",
+        "answers": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "connected": false
+      },
+      {
+        "id": "DH7ADOKA51",
+        "name": "Quizanderthals ",
+        "answers": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "connected": false
+      },
+      {
+        "id": "TOJ8PI591I",
+        "name": "Quaran-Tina Turner",
+        "answers": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "connected": false
+      },
+      {
+        "id": "QMFUS0CRUO",
+        "name": "Quaranation Street",
+        "answers": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "connected": false
+      },
+      {
+        "id": "EONMWFBTRO",
+        "name": "",
+        "answers": [
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "connected": false
+      }
+    ],
+    "options": {
+      "save_quiz": true,
+      "allow_signups": true
+    },
+    "state": "pre-quiz",
+    "current_round": -1,
+    "current_question": -1,
+    "connected_teams": 0,
+    "connected_observers": 0
   }
 }

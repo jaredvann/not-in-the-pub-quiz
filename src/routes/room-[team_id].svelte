@@ -25,6 +25,8 @@
     <h3><small class="text-muted">Playing as:</small></h3>
     <h3 class="mb-4">{team.name}</h3>
 
+    <hr/>
+
     {#if quiz.state == "pre-quiz"}
         <div class="card mb-4">
             <div class="card-body">

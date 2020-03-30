@@ -80,6 +80,33 @@ export class Quiz {
         return this.teams.reduce((acc, team) => team.totalScore() + acc, 0) / this.teams.length
     }
 
+    back() {
+        if (this.state == "pre-round") {
+            if (this.current_round == 0) {
+                this.state = "pre-quiz"
+            }
+            else {
+                this.state = "round-marking"
+                this.current_round--
+                this.current_question = this.rounds[this.current_round].questions.length-1
+            }
+        }
+        else if (this.state == "round") {
+            if (this.current_question == 0) {
+                this.state = "pre-round"
+            }
+            else {
+                this.current_question--
+            }
+        }
+        else if (this.state == "round-marking") {
+            this.state = "round"
+        }
+        else if (this.state == "post-quiz") {
+            // NO CAN DO
+        }
+    }
+
     next() {
         if (this.state == "pre-quiz") {
             this.state = "pre-round"
