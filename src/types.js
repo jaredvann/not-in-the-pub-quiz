@@ -61,7 +61,7 @@ export class Quiz {
         this.current_question = -1
 
         this.connected_teams = 0
-        this.connected_observers = 0
+        this.connected_players = 0
     }
 
     quizLength() {
@@ -74,6 +74,16 @@ export class Quiz {
 
     averageRoundScore(i) {
         return this.teams.reduce((acc, team) => team.roundScore(i) + acc, 0) / this.teams.length
+    }
+
+    averageRoundScores() {
+        let scores = []
+
+        for (let i = 0; i < this.rounds.length; i++) {
+            scores.push(this.teams.reduce((acc, team) => team.roundScore(i) + acc, 0) / this.teams.length)
+        }
+
+        return scores
     }
 
     averageTotalScore() {
@@ -135,55 +145,8 @@ export class Quiz {
             }
         }
         else if (this.state == "post-quiz") {
-            // WAT
         }
         else {
-            // YOU DUN GOOFED
-        }
-    }
-}
-
-
-
-export class ObserverQuestion {
-    constructor(question, points) {
-        this.question = question
-        this.points = points
-    }
-}
-
-
-export class ObserverRound {
-    constructor(name, questions, total_questions) {
-        this.name = name
-        this.questions = questions
-        this.total_questions = total_questions
-    }
-}
-
-
-export class ObserverQuiz {
-    constructor(quiz) {
-        if (quiz) {
-            this.id = quiz.id
-            this.name = quiz.name
-            this.state = quiz.state
-
-            this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, round]) => {
-                const questions = round.questions.slice(0, quiz.current_round<i ? round.questions.length : quiz.current_question+1).map((question) => {
-                    return new ObserverQuestion(question.question, question.points)
-                })
-        
-                return new ObserverRound(round.name, questions, round.questions.length)
-            })
-            
-            this.total_rounds = quiz.rounds.length
-            
-            this.current_round = quiz.current_round
-            this.current_question = quiz.current_question
-
-            this.connected_teams = quiz.connected_teams
-            this.connected_observers = quiz.connected_observers
         }
     }
 }
@@ -197,7 +160,7 @@ export class Team {
         this.answers = []
         this.scores = []
 
-        this.connected = false
+        this.connections = 0
         
         if (quiz_length != undefined) {
             for (const round_length of quiz_length) {
@@ -211,7 +174,104 @@ export class Team {
         return this.scores[i].reduce((a, b) => a + b, 0)
     }
 
+    roundScores() {
+        return this.scores.map(r => r.reduce((a, b) => a + b, 0))
+    }
+
     totalScore() {
         return this.scores.reduce((a, b) => a + b.reduce((c, d) => c + d, 0), 0)
+    }
+}
+
+
+
+export class ControllerQuiz {
+    constructor(quiz) {
+        this.id = quiz.id
+        this.host_id = quiz.host_id
+        this.name = quiz.name
+        this.state = quiz.state
+
+        this.rounds = quiz.rounds
+        this.teams = quiz.teams.map(t => new ControllerTeam(t))
+        
+        this.total_rounds = quiz.rounds.length
+        
+        this.current_round = quiz.current_round
+        this.current_question = quiz.current_question
+
+        this.connected_teams = quiz.connected_teams
+        this.connected_players = quiz.connected_players
+
+        this.average_round_scores = quiz.averageRoundScores()
+        this.average_total_score = quiz.averageTotalScore()
+    }
+}
+
+
+export class ControllerTeam {
+    constructor(team) {
+        this.id = team.id
+        this.name = team.name
+        this.answers = team.answers
+        this.scores = team.scores
+        this.connections = team.connections
+
+        this.round_scores = team.roundScores()
+        this.total_score = team.totalScore()
+    }
+}
+
+
+
+export class PublicQuestion {
+    constructor(question, points) {
+        this.question = question
+        this.points = points
+    }
+}
+
+
+export class PublicRound {
+    constructor(name, questions, total_questions) {
+        this.name = name
+        this.questions = questions
+        this.total_questions = total_questions
+    }
+}
+
+
+export class PublicQuiz {
+    constructor(quiz) {
+        this.id = quiz.id
+        this.name = quiz.name
+        this.state = quiz.state
+
+        this.n_teams = quiz.teams.length
+
+        this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, round]) => {
+            const questions = round.questions.slice(0, quiz.current_round<i ? round.questions.length : quiz.current_question+1).map((question) => {
+                return new PublicQuestion(question.question, question.points)
+            })
+    
+            return new PublicRound(round.name, questions, round.questions.length)
+        })
+        
+        this.total_rounds = quiz.rounds.length
+        
+        this.current_round = quiz.current_round
+        this.current_question = quiz.current_question
+
+        this.connected_teams = quiz.connected_teams
+        this.connected_players = quiz.connected_players
+    }
+}
+
+
+export class PublicTeam {
+    constructor(quiz, team) {
+        this.id = team.id
+        this.name = team.name
+        this.answers = team.answers[quiz.current_round]
     }
 }

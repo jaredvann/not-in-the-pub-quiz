@@ -7,19 +7,18 @@
 
     <div class="d-block d-md-none">
       <span class="btn btn-sm btn-outline-dark no-hover">R: {quiz.current_round+1}/{quiz.rounds.length}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Q: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : quiz.questionsInRound()}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">C: {quiz.connected_teams}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_observers}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Q: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : questions_in_round}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">T: {quiz.connected_teams}/{quiz.teams.length}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_players}</span>
     </div>
     <div class="d-none d-md-block">
       <span class="btn btn-sm btn-outline-dark no-hover">Round: {quiz.current_round+1}/{quiz.rounds.length}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Question: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : quiz.questionsInRound()}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Captains Connected: {quiz.connected_teams}</span>
-      <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_observers}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Question: {quiz.current_question+1}/{quiz.current_round == -1 ? 0 : questions_in_round}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Teams Connected: {quiz.connected_teams}/{quiz.teams.length}</span>
+      <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_players}</span>
     </div>
   </div>
 </nav>
-
 
 <div class="container mt-4">
   <div class="row">
@@ -31,17 +30,9 @@
         </h3>
         {#if text_invite_format}
           <div class="list-group-item">
-            <textarea class="form-control" rows={quiz.teams.length+1} value={"Team Players".padEnd(Math.max(...quiz.teams.map(t => t.name.length))) + ` : http://notinthepubquiz.com/observe-${quiz.id}\n` + quiz.teams.map(t => t.name.padEnd(Math.max(...quiz.teams.map(t => t.name.length))) + ` : http://notinthepubquiz.com/room-${t.id}`).join("\n")} style="font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;"></textarea>
+            <textarea class="form-control" rows={quiz.teams.length*3} value={quiz.teams.map(t => `${t.name}:\nhttp://notinthepubquiz.com/room-${t.id}`).join("\n\n")} style="font-family:monospace;"></textarea>
           </div>
         {:else}
-          <div class="list-group-item">
-            <div class="row">
-              <label class="col-4 col-form-label"><strong>Team Players</strong></label>
-              <div class="col-8">
-                <input type="text" value={`http://notinthepubquiz.com/observe-${quiz.id}`} class="form-control" readonly>
-              </div>
-            </div>
-          </div>
           {#each quiz.teams as team}
             <div class="list-group-item">
               <div class="row">
@@ -113,11 +104,11 @@
           <tbody>
             {#each quiz.teams as team}
               <tr>
-                <td><strong class:text-success={team.connected}>{team.name}<strong></td>
+                <td><strong class:text-success={team.connections > 0}>{team.name}<strong></td>
                   {#each quiz.rounds as _, i}
-                    <td>{team.roundScore(i)}</td>
+                    <td>{team.round_scores[i]}</td>
                   {/each}
-                <td>{team.totalScore()}</td>
+                <td>{team.total_score}</td>
               </tr>
             {/each}
           </tbody>
@@ -126,9 +117,9 @@
               <tr>
                 <td>(Average)</td>
                   {#each quiz.rounds as _, i}
-                    <td>{quiz.averageRoundScore(i)}</td>
+                    <td>{quiz.average_round_scores[i].toFixed(1)}</td>
                   {/each}
-                <td>{quiz.averageTotalScore()}</td>
+                <td>{quiz.average_total_score.toFixed(1)}</td>
               </tr>
             </tfoot>
           {/if}
@@ -140,20 +131,7 @@
 
 
 <script context="module">
-import { Question, Quiz, Round, Team } from "../types.js"
-
 let next_btn_text = ""
-
-function parseQuizFromJSON(quiz) {
-    quiz.rounds = quiz.rounds.map(r => {
-        r.questions = r.questions.map(q => Object.assign(new Question, q))
-        return Object.assign(new Round, r)
-    })
-
-    quiz.teams = quiz.teams.map(t => Object.assign(new Team, t))
-
-    return Object.assign(new Quiz, quiz)
-}
 
 
 function generateNextBtnText(quiz) {
@@ -164,7 +142,7 @@ function generateNextBtnText(quiz) {
         return "Start Round"
     }
     else if (quiz.state == "round") {
-        return (quiz.current_question < quiz.questionsInRound()-1) ? "Next Question" : "Mark Round"
+        return (quiz.current_question < quiz.rounds[quiz.current_round].questions.length-1) ? "Next Question" : "Mark Round"
     }
     else if (quiz.state == "round-marking") {
         return (quiz.current_round < quiz.rounds.length-1) ? "Next Round" : "Finish Quiz"
@@ -186,7 +164,7 @@ export async function preload(page, session) {
         return
     }
 
-    let quiz = parseQuizFromJSON(await response.json())
+    let quiz = await response.json()
 
     next_btn_text = generateNextBtnText(quiz)
     return { quiz, next_btn_text }
@@ -205,17 +183,17 @@ let text_invite_format = false
 let awaiting_response = false
 let ws = null
 
+let questions_in_round
+$: questions_in_round = quiz.rounds[quiz.current_round].questions.length
 
 onMount(() => {
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
-
-    ws = new WebSocket(`${protocol}//163.172.140.148:8070?host_id=${quiz.host_id}`)
+    ws = new WebSocket(`ws://notinthepubquiz.com:8070?host_id=${quiz.host_id}`)
 
     ws.addEventListener("message", event => {
         const data = JSON.parse(event.data)
 
-        if (data.type == "quiz-state") {
-            quiz = parseQuizFromJSON(data.quiz)
+        if (data.type == "state") {
+            quiz = data.quiz
             next_btn_text = generateNextBtnText(quiz)
             awaiting_response = false
         }
@@ -224,7 +202,7 @@ onMount(() => {
 
 
 function swapInviteFormat() {
-  text_invite_format = !text_invite_format
+    text_invite_format = !text_invite_format
 }
 
 

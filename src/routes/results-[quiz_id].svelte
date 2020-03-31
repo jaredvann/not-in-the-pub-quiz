@@ -34,9 +34,9 @@
           <tr>
             <td>(Average)</td>
               {#each quiz.rounds as _, i}
-                <td>{quiz.averageRoundScore(i)}</td>
+                <td>{quiz.averageRoundScore(i).toFixed(1)}</td>
               {/each}
-            <td>{quiz.averageTotalScore()}</td>
+            <td>{quiz.averageTotalScore().toFixed(1)}</td>
           </tr>
         </tfoot>
     </table>
@@ -108,14 +108,14 @@ export async function preload(page, session) {
 
     let quiz = parseQuizFromJSON(await response.json())
 
-    return { quiz }
+    let sorted_teams = quiz.teams.sort((a, b) => a.totalScore() < b.totalScore())
+
+    return { quiz, sorted_teams }
 }
 </script>
 
 
 <script>
 export let quiz
-
-const sorted_teams = quiz.teams.sort((a, b) => a.totalScore() < b.totalScore())
-
+export let sorted_teams
 </script>

@@ -6,13 +6,9 @@
         <p>The easy way to organise a virtual pub quiz with your friends.</p>
 
         <div class="d-block d-md-none mt-5">
-            <a class="btn btn-lg btn-block btn-dark mr-2" href="join-observe" role="button">Join as a team player!</a>
-            <a class="btn btn-lg btn-block btn-dark mr-2" href="join-team" role="button">Join as a team captain!</a>
             <a class="btn btn-lg btn-block btn-dark mr-2" href="create" role="button">Create Quiz!</a>
         </div>
         <div class="d-none d-md-block mt-5">
-            <a class="btn btn-lg btn-dark mr-2 mb-3" href="join-observe" role="button">Join as a team player!</a>
-            <a class="btn btn-lg btn-dark mr-2 mb-3" href="join-team" role="button">Join as a team captain!</a>
             <a class="btn btn-lg btn-dark mr-2 mb-3" href="create" role="button">Create your own quiz!</a>
         </div>
     </div>

@@ -6,16 +6,16 @@
                 <span class="btn btn-sm btn-outline-dark no-hover">R {quiz.current_round+1}/{quiz.total_rounds}</span>
                 <span class="btn btn-sm btn-outline-dark no-hover">Q {quiz.current_question+1}/{round.total_questions}</span>
             {/if}
-            <span class="btn btn-sm btn-outline-dark no-hover">C: {quiz.connected_teams}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_observers}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">T: {quiz.connected_teams}/{quiz.n_teams}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">P: {quiz.connected_players}</span>
         </div>
         <div class="d-none d-md-block">
             {#if quiz.state != "pre-quiz"}
                 <span class="btn btn-sm btn-outline-dark no-hover">Round {quiz.current_round+1}/{quiz.total_rounds}</span>
                 <span class="btn btn-sm btn-outline-dark no-hover">Question {quiz.current_question+1}/{round.total_questions}</span>
             {/if}
-            <span class="btn btn-sm btn-outline-dark no-hover">Captains Connected: {quiz.connected_teams}</span>
-            <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_observers}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">Teams Connected: {quiz.connected_teams}/{quiz.n_teams}</span>
+            <span class="btn btn-sm btn-outline-dark no-hover">Players Connected: {quiz.connected_players}</span>
         </div>
     </div>
 </nav>
@@ -56,7 +56,7 @@
                     <h4>{question.question}</h4>
                 </div>
                 <div class="card-footer">
-                    <input type="text" on:input={answerEdited} data-q={i} class="form-control" placeholder="Type answer here..."/>
+                    <input type="text" on:input={answerEdited} data-q={i} class="form-control" value={team.answers[i]} placeholder="Type answer here..."/>
                 </div>
             </div>
         {/each}
@@ -79,8 +79,6 @@
 
 
 <script context="module">
-import { ObserverQuiz, ObserverRound, Team } from "../types.js"
-
 export async function preload(page, session) {
     const res = await this.fetch(`/api/room?team_id=${page.params.team_id}`, {
         method: "GET",
@@ -91,15 +89,11 @@ export async function preload(page, session) {
         this.error(404, "Team not found!")
         return
     }
-    else if (res.status == 409) {
-        this.error(409, "Only one person can view the team page at a time! If you think this is a mistake try refreshing the page.")
-        return
-    }
 
-    let data = await res.json()
+    const data = await res.json()
 
-    let team = Object.assign(new Team, data.team)
-    let quiz = Object.assign(new ObserverQuiz, data.quiz)
+    const team = data.team
+    const quiz = data.quiz
 
     return { team, quiz }
 }
@@ -118,18 +112,20 @@ let round
 $: round = quiz.rounds[quiz.rounds.length-1]
 
 onMount(() => {
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
-
-    team_ws = new WebSocket(`${protocol}//163.172.140.148:8080?quiz_id=${quiz.id}&team_id=${team.id}`)
+    team_ws = new WebSocket(`ws://notinthepubquiz.com:8080?quiz_id=${quiz.id}&team_id=${team.id}`)
 
     team_ws.addEventListener("message", event => {
         const data = JSON.parse(event.data)
 
-        if (data.type == "quiz-state") {
+        if (data.type == "state") {
             quiz = data.quiz
+            team = data.team
         }
-        else if (data.type == "connected-observers") {
-            quiz.connected_observers = data.value
+        else if (data.type == "team-state") {
+            team = data.team
+        }
+        else if (data.type == "connected-players") {
+            quiz.connected_players = data.value
         }
         else if (data.type == "connected-teams") {
             quiz.connected_teams = data.value
