@@ -225,18 +225,18 @@ export class ControllerTeam {
 
 
 export class PublicQuestion {
-    constructor(question, points) {
-        this.question = question
-        this.points = points
+    constructor(question) {
+        this.question = question.question
+        this.points = question.points
     }
 }
 
 
 export class PublicRound {
-    constructor(name, questions, total_questions) {
-        this.name = name
-        this.questions = questions
-        this.total_questions = total_questions
+    constructor(round, max=undefined) {
+        this.name = round.name
+        this.questions = round.questions.slice(0, (max == undefined) ? round.questions.length : max).map(q => new PublicQuestion(q))
+        this.total_questions = round.questions.length
     }
 }
 
@@ -246,17 +246,10 @@ export class PublicQuiz {
         this.id = quiz.id
         this.name = quiz.name
         this.state = quiz.state
-
         this.n_teams = quiz.teams.length
 
-        this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, round]) => {
-            const questions = round.questions.slice(0, quiz.current_round<i ? round.questions.length : quiz.current_question+1).map((question) => {
-                return new PublicQuestion(question.question, question.points)
-            })
-    
-            return new PublicRound(round.name, questions, round.questions.length)
-        })
-        
+        this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, r]) => {new PublicRound(r, quiz.current_round<i ? round.questions.length : quiz.current_question+1)})
+
         this.total_rounds = quiz.rounds.length
         
         this.current_round = quiz.current_round
@@ -273,5 +266,33 @@ export class PublicTeam {
         this.id = team.id
         this.name = team.name
         this.answers = team.answers[quiz.current_round]
+    }
+}
+
+
+export class Results {
+    constructor(quiz) {
+        this.id = quiz.id
+        this.name = quiz.name
+
+        this.teams = quiz.teams.map(t => {
+            return {
+                name: t.name,
+                answers: t.answers,
+                scores: t.scores,
+                round_scores: t.roundScores(),
+                total_score: t.totalScore()
+            }
+        }).sort((a, b) => a.total_score < b.total_score)
+
+        this.rounds = quiz.rounds.map(r => {
+            return {
+                name: r.name,
+                questions: r.questions.map(q => { return {question: q.question, answer: q.answer, points: q.points}})
+            }
+        })
+        
+        this.average_round_scores = quiz.averageRoundScores()
+        this.average_total_score = quiz.averageTotalScore()
     }
 }

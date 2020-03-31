@@ -20,25 +20,25 @@
         </tr>
       </thead>
       <tbody>
-        {#each sorted_teams as team}
+        {#each quiz.teams as team}
           <tr>
             <td>{team.name}</td>
               {#each quiz.rounds as _, i}
-                <td>{team.roundScore(i)}</td>
+                <td>{team.round_scores[i]}</td>
               {/each}
-            <td>{team.totalScore()}</td>
+            <td>{team.total_score}</td>
           </tr>
         {/each}
       </tbody>
-        <tfoot>
-          <tr>
-            <td>(Average)</td>
-              {#each quiz.rounds as _, i}
-                <td>{quiz.averageRoundScore(i).toFixed(1)}</td>
-              {/each}
-            <td>{quiz.averageTotalScore().toFixed(1)}</td>
-          </tr>
-        </tfoot>
+      <tfoot>
+        <tr>
+          <td>(Average)</td>
+            {#each quiz.rounds as _, i}
+              <td>{quiz.average_round_scores[i].toFixed(1)}</td>
+            {/each}
+          <td>{quiz.average_total_score.toFixed(1)}</td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 
@@ -82,18 +82,6 @@
 
 
 <script context="module">
-import { Question, Quiz, Round, Team } from "../types.js"
-
-function parseQuizFromJSON(quiz) {
-    quiz.rounds = quiz.rounds.map(r => {
-        r.questions = r.questions.map(q => Object.assign(new Question, q))
-        return Object.assign(new Round, r)
-    })
-
-    quiz.teams = quiz.teams.map(t => Object.assign(new Team, t))
-
-    return Object.assign(new Quiz, quiz)
-}
 
 export async function preload(page, session) {
     const response = await this.fetch(`/api/results?quiz_id=${page.params.quiz_id}`, {
@@ -102,20 +90,17 @@ export async function preload(page, session) {
     })
 
     if (response.status == 404) {
-        this.error(404, "Quiz not found!")
+        this.error(404, "Quiz results not found!")
         return
     }
 
-    let quiz = parseQuizFromJSON(await response.json())
+    const quiz = await response.json()
 
-    let sorted_teams = quiz.teams.sort((a, b) => a.totalScore() < b.totalScore())
-
-    return { quiz, sorted_teams }
+    return { quiz }
 }
 </script>
 
 
 <script>
 export let quiz
-export let sorted_teams
 </script>

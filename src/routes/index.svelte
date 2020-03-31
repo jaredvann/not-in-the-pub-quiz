@@ -5,12 +5,7 @@
         <hr style="border: 1px solid #333;"/>
         <p>The easy way to organise a virtual pub quiz with your friends.</p>
 
-        <div class="d-block d-md-none mt-5">
-            <a class="btn btn-lg btn-block btn-dark mr-2" href="create" role="button">Create Quiz!</a>
-        </div>
-        <div class="d-none d-md-block mt-5">
-            <a class="btn btn-lg btn-dark mr-2 mb-3" href="create" role="button">Create your own quiz!</a>
-        </div>
+        <a class="btn btn-lg btn-dark btn-block mt-5" href="create" role="button">Create your own quiz!</a>
     </div>
 
     <h1 class="display-3 mb-4">How it works:</h1>
@@ -23,7 +18,7 @@
     <h2 class="mt-4" style="font-weight:200;">2. Add your rounds and questions.</h2>
     <img src="2.png" class="img-fluid" alt="Screenshot 2">
     
-    <h2 class="mt-4" style="font-weight:200;">3. Send out the invite links to your friends - team links to the team captains and the participant link to the rest of the players.</h2>
+    <h2 class="mt-4" style="font-weight:200;">3. Send out the invite links to your friends.</h2>
     <img src="3.png" class="img-fluid" alt="Screenshot 3">
     
     <h2 class="mt-4" style="font-weight:200;">4. Wait for your team captains to join (team names turn green!) and start the quiz.</h2>

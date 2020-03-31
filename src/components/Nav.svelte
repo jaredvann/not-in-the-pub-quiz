@@ -13,7 +13,6 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link {segment === undefined ? 'active' : ''}" href=".">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link {segment === 'create' ? 'active' : ''}" href="create">Create Quiz</a>
-                <a class="nav-item nav-link {segment === 'join' ? 'active' : ''}" href="join-team">Join A Quiz</a>
             </div>
         </div>
     </div>

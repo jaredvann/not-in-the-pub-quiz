@@ -1,0 +1,101 @@
+{
+  "NITPQ1": {
+    "id": "NITPQ1",
+    "name": "Sam's Pub Quiz",
+    "teams": [
+      {
+        "name": "I lost my job and now all I do is host this quiz",
+        "answers": [
+          [
+            "Answer",
+            "Also An Answer"
+          ],
+          [
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "round_scores": [
+          0,
+          0
+        ],
+        "total_score": 0
+      },
+      {
+        "name": "Team 2",
+        "answers": [
+          [
+            "Wrong Answer",
+            "What is Covid?"
+          ],
+          [
+            "",
+            ""
+          ]
+        ],
+        "scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "round_scores": [
+          0,
+          0
+        ],
+        "total_score": 0
+      }
+    ],
+    "rounds": [
+      {
+        "name": "Current Affairs",
+        "questions": [
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know.",
+            "points": 2
+          },
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know.",
+            "points": 1
+          }
+        ]
+      },
+      {
+        "name": "More Current Affairs",
+        "questions": [
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know.",
+            "points": 1
+          },
+          {
+            "question": "What does COVID-19 stand for?",
+            "answer": "I don't know.",
+            "points": 1
+          }
+        ]
+      }
+    ],
+    "average_round_scores": [
+      0,
+      0
+    ],
+    "average_total_score": 0
+  }
+}

@@ -12,12 +12,13 @@ import querystring from "querystring"
 
 const bodyparser = require("body-parser")
 
-import { ControllerQuiz, ControllerTeam, PublicQuiz, PublicTeam, Question, Quiz, Round, Team } from "./types.js"
+import { ControllerQuiz, PublicQuiz, PublicTeam, Question, Quiz, Results, Round, Team } from "./types.js"
 
 const { PORT, NODE_ENV } = process.env
 const dev = NODE_ENV === "development"
 
-const DATA_FILE = "data.json"
+const QUIZZES_DATA_FILE = "data/quizzes.json"
+const RESULTS_DATA_FILE = "data/results.json"
 
 
 // Set up app
@@ -90,10 +91,10 @@ app.get("/api/check-team-name", (req, res) => {
 })
 
 app.get("/api/results", (req, res) => {
-    const quiz = quizzes[req.query.quiz_id]
+    const quiz_results = results[req.query.quiz_id]
 
-    if (quiz.state == "post-quiz") {
-        send(res, 200, quiz)
+    if (quiz_results) {
+        send(res, 200, quiz_results)
     }
     else {
         send(res, 404)
@@ -155,6 +156,12 @@ host_wss.on("connection", (ws, req) => {
             if (data.type == "back") ws.quiz.back()
             else                     ws.quiz.next()
 
+            if (ws.quiz.state == "post-quiz") {
+                results[ws.quiz.id] = new Results(ws.quiz)
+                fs.writeFileSync(RESULTS_DATA_FILE, JSON.stringify(results, null, 2) , "utf-8")
+                fs.writeFileSync(QUIZZES_DATA_FILE, JSON.stringify(quizzes, null, 2) , "utf-8")
+            }
+
             ws.send(JSON.stringify({type: "state", quiz: new ControllerQuiz(ws.quiz)}))
 
             const public_quiz = new PublicQuiz(ws.quiz)
@@ -165,12 +172,6 @@ host_wss.on("connection", (ws, req) => {
                     quiz: public_quiz,
                     team: new PublicTeam(ws.quiz, team)
                 })
-            }
-
-            if (ws.quiz.state == "post-quiz" && ws.quiz.options.save_quiz) {
-                let q2 = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
-                q2[ws.quiz.id] = ws.quiz
-                fs.writeFileSync(DATA_FILE, JSON.stringify(q2, null, 2) , "utf-8")
             }
         }
         else if (data.type == "score-update") {
@@ -216,7 +217,8 @@ team_wss.on("connection", (ws, req) => {
 
 // Create state objects
 
-let quizzes = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
+let quizzes = JSON.parse(fs.readFileSync(QUIZZES_DATA_FILE, "utf-8"))
+let results = JSON.parse(fs.readFileSync(RESULTS_DATA_FILE, "utf-8"))
 
 for (let quiz_id in quizzes) {
     let quiz = quizzes[quiz_id]
@@ -230,7 +232,7 @@ for (let quiz_id in quizzes) {
 
     quiz = Object.assign(new Quiz, quiz)
 
-    quizzes[quiz_id] = onchange(quiz, (path, value, previous) => {
+    quizzes[quiz_id] = onchange(quiz, (path, value, _) => {
         if (path == "connected_teams") {
             sendToAllTeams(quiz.id, {type: "connected-teams", value: value})
         }
@@ -289,11 +291,9 @@ function makeQuizObject(name, rounds, teams, options, id=undefined) {
 
     quizzes[quiz.id] = quizproxy
 
-    if (options.save_quiz) {
-        const q2 = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
-        q2[quiz.id] = quizproxy
-        fs.writeFileSync(DATA_FILE, JSON.stringify(q2, null, 2) , "utf-8")
-    }
+    const q2 = JSON.parse(fs.readFileSync(QUIZZES_DATA_FILE, "utf-8"))
+    q2[quiz.id] = quizproxy
+    fs.writeFileSync(QUIZZES_DATA_FILE, JSON.stringify(q2, null, 2) , "utf-8")
 
     return quizproxy
 }

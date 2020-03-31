@@ -52,10 +52,10 @@
     <div class="col-7">
       {#each [...quiz.rounds.entries()] as [i, round]} 
         <div class="list-group mb-4">
-          <h3 class:list-group-item-secondary={quiz.state=="post-quiz" || quiz.current_round>i} class:list-group-item-dark={quiz.state!="pre-quiz" && quiz.state!="post-quiz" && quiz.current_round==i} class="list-group-item">Round {i+1} - {round.name}</h3>
+          <h3 class:list-group-item-primary={i==quiz.current_round && quiz.state=="round-marking"} class:list-group-item-secondary={quiz.state=="post-quiz" || quiz.current_round>i} class:list-group-item-dark={quiz.state=="round" && quiz.current_round==i} class="list-group-item">Round {i+1} - {round.name}</h3>
       
           {#each [...round.questions.entries()] as [j, question]}
-            <div class="list-group-item" class:list-group-item-light={quiz.state=="post-quiz" || i<quiz.current_round || (i==quiz.current_round && (j<quiz.current_question || quiz.state=="round-marking"))} class:list-group-item-success={quiz.state=="round" && i==quiz.current_round && j==quiz.current_question}>
+            <div class="list-group-item" class:list-group-item-primary={i==quiz.current_round && quiz.state=="round-marking"} class:list-group-item-light={quiz.state=="post-quiz" || i<quiz.current_round || (i==quiz.current_round && j<quiz.current_question && quiz.state=="round")} class:list-group-item-success={quiz.state=="round" && i==quiz.current_round && j==quiz.current_question}>
               <p class="lead">
                 Question {j+1}:
                 <span class="badge badge-secondary float-right">{question.points} {question.points == 1 ? "point" : "points"}</span>
@@ -183,7 +183,6 @@ let text_invite_format = false
 let awaiting_response = false
 let ws = null
 
-let questions_in_round
 $: questions_in_round = quiz.rounds[quiz.current_round].questions.length
 
 onMount(() => {

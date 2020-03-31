@@ -108,7 +108,6 @@ export let quiz
 
 let team_ws
 
-let round
 $: round = quiz.rounds[quiz.rounds.length-1]
 
 onMount(() => {
