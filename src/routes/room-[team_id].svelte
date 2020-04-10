@@ -106,9 +106,9 @@ import { onMount } from "svelte"
 export let team
 export let quiz
 
-let team_ws
+$: round = quiz.rounds[quiz.current_round]
 
-$: round = quiz.rounds[quiz.rounds.length-1]
+let team_ws
 
 onMount(() => {
     team_ws = new WebSocket(`ws://notinthepubquiz.com:8080?quiz_id=${quiz.id}&team_id=${team.id}`)

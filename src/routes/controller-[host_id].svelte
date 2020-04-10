@@ -55,7 +55,7 @@
           <h3 class:list-group-item-primary={i==quiz.current_round && quiz.state=="round-marking"} class:list-group-item-secondary={quiz.state=="post-quiz" || quiz.current_round>i} class:list-group-item-dark={quiz.state=="round" && quiz.current_round==i} class="list-group-item">Round {i+1} - {round.name}</h3>
       
           {#each [...round.questions.entries()] as [j, question]}
-            <div class="list-group-item" class:list-group-item-primary={i==quiz.current_round && quiz.state=="round-marking"} class:list-group-item-light={quiz.state=="post-quiz" || i<quiz.current_round || (i==quiz.current_round && j<quiz.current_question && quiz.state=="round")} class:list-group-item-success={quiz.state=="round" && i==quiz.current_round && j==quiz.current_question}>
+            <div class="list-group-item" class:list-group-item-primary={i==quiz.current_round && quiz.state=="round-marking"} class:list-group-item-light={quiz.state=="post-quiz" || i<quiz.current_round} class:list-group-item-success={quiz.state=="round" && i==quiz.current_round && j==quiz.current_question}>
               <p class="lead">
                 Question {j+1}:
                 <span class="badge badge-secondary float-right">{question.points} {question.points == 1 ? "point" : "points"}</span>

@@ -57,7 +57,7 @@ export class Quiz {
         this.options = options
 
         this.state = "pre-quiz"
-        this.current_round = -1
+        this.current_round = 0
         this.current_question = -1
 
         this.connected_teams = 0
@@ -248,7 +248,7 @@ export class PublicQuiz {
         this.state = quiz.state
         this.n_teams = quiz.teams.length
 
-        this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, r]) => {new PublicRound(r, quiz.current_round<i ? round.questions.length : quiz.current_question+1)})
+        this.rounds = [...quiz.rounds.slice(0, quiz.current_round+1).entries()].map(([i, r]) => new PublicRound(r, quiz.current_round<i ? round.questions.length : quiz.current_question+1))
 
         this.total_rounds = quiz.rounds.length
         
